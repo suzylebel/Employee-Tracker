@@ -60,6 +60,7 @@ function start() {
         "View all roles",
         "View all Employees",
         "View all Departments",
+        "Delete an Employee",
         "exit"
       ]
     }).then((answers) => {
@@ -89,53 +90,22 @@ function start() {
         viewDepartments();
         break;
 
-        case "View all roles": 
+      case "View all roles": 
         viewRoles();
         break;
       
-      case "Delete Employees": 
+      case "Delete an Employee": 
         deleteEmployees();
         break;
       
-      // case "View all Departments": 
-      //   viewDepartments();
-      //   break;  
-      
       case "See the entire team": 
-      
         viewEntireTeam();
         break;
     }
   });
   }
 
-  function deleteEmployees() {
-    connection.query('SELECT * FROM newEmployee', function(err, res) {
-      if (err) throw err;
-    inquirer
-    .prompt([
-      {
-      name: "delete",
-      type: "rawlist",
-      message: "What employee do you want to delete?",
-      choices: function () {
-        let choiceEmmployeeDel = [];
-        for (var i = 0; i < res.length; i++) {
-          choiceEmmployeeDel.push(res[i].fname + ' ' + res[i].lname);
-        }
-        return choiceEmmployeeDel
-      },
-    }
-  ]).then(function (answer) {
-    let employee = answer.choices.split('')
-    connection.query("DELETE FROM newEmployee where fname = ? AND lname = ?")
-    console.log("Employee was successfully removed!")
-    viewEmployees();
-    start();
-  // helper function "get all employees" get them by index #
 
-// by index (bob, joe) by id. Query by ID
-  },
 
   // ==================ADD EMPLOYEE========================
     function addEmployee() {
@@ -184,7 +154,7 @@ function start() {
             }
           );
         
-    })
+    }
 
   //   function updateEmployee(){
   //     console.log("updating...\n");
@@ -222,7 +192,7 @@ function start() {
         start();
         // connection.end();
       });
-    })
+    }
 
     // / ==================ADD Role========================
     function addRole() {
@@ -274,6 +244,31 @@ function start() {
       });
     }
 
-  }
 
-  
+    function deleteEmployees() {
+      connection.query('SELECT * FROM newEmployee', function(err, res) {
+        if (err) throw err;
+      inquirer
+      .prompt([
+        {
+        name: "delete",
+        type: "rawlist",
+        message: "What employee do you want to delete?",
+        choices: function () {
+          let choiceEmmployeeDel = [];
+          for (var i = 0; i < res.length; i++) {
+            choiceEmmployeeDel.push(res[i].fname + ' ' + res[i].lname);
+          }
+          return choiceEmmployeeDel
+        },
+      }
+    ]).then(function (answer) {
+      let employee = answer.delete.split('')
+      connection.query("DELETE FROM newEmployee where fname = ? AND lname = ?", employee)
+      console.log("Employee was successfully removed!")
+      viewEmployees();
+      start();
+
+    });
+  });
+}
