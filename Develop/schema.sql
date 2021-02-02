@@ -14,6 +14,8 @@ CREATE TABLE employeeRole (
     title VARCHAR(30),
     salary DECIMAL(10,4),
     department_id INT, 
+    INDEX dep_id (department_id),
+    CONSTRAINT fk_dep FOREIGN KEY (department_id) REFERENCES Department (id) ON DELETE CASCADE,
     PRIMARY KEY (id)
 )
 
@@ -23,6 +25,8 @@ CREATE TABLE newEmployee (
   lname VARCHAR(30) NOT NULL,
   role_id INT NULL,
   manager VARCHAR(100) NULL,
+  INDEX rol_id (role_id),
+  CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES employeeRole (id) ON DELETE CASCADE,
   PRIMARY KEY (id)
 )
 
