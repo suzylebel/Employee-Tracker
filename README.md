@@ -32,7 +32,8 @@ So that I can organize and plan my business
 
 ## About the Project
 
-Check out the 
+The goal was to make a databse schema under these terms
+![](readmeScreenshot.png)
 
 Explore the [Deployed Employee Tracker on Github](https://github.com/suzylebel/employee-tracker))
 
